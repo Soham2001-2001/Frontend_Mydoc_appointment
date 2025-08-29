@@ -1,0 +1,213 @@
+.doctor-appts {
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+
+    .page-title {
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .actions .btn {
+      border-radius: 12px;
+    }
+  }
+
+  .filters {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 12px;
+    margin: 12px 0 16px;
+
+    .search .form-control {
+      border-radius: 12px;
+      padding: 10px 14px;
+    }
+
+    .status-select .form-select {
+      border-radius: 12px;
+      min-width: 180px;
+    }
+
+    .segmented {
+      display: inline-flex;
+      background: #f3f4f6;
+      padding: 4px;
+      border-radius: 999px;
+      gap: 6px;
+
+      .seg-btn {
+        border: 0;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: transparent;
+        font-weight: 600;
+        color: #374151;
+        cursor: pointer;
+        transition: background .2s ease, color .2s ease;
+
+        &.active,
+        &:hover {
+          background: #fff;
+          color: #111827;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+      }
+    }
+  }
+
+  .skeleton {
+    border-radius: 16px;
+    .s-line {
+      height: 14px;
+      margin: 10px 0;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 37%, #f3f4f6 63%);
+      background-size: 400% 100%;
+      animation: shimmer 1.2s infinite;
+    }
+    .w-25 { width: 25%; }
+    .w-50 { width: 50%; }
+    .w-75 { width: 75%; }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+  }
+
+  .empty {
+    display: grid;
+    place-items: center;
+
+    .empty-card {
+      text-align: center;
+      padding: 36px 20px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid #eef2f7;
+      max-width: 520px;
+      margin: 10px auto;
+      box-shadow: 0 10px 20px rgba(17,24,39,.05);
+
+      .icon {
+        font-size: 40px;
+        margin-bottom: 10px;
+      }
+
+      .btn {
+        border-radius: 12px;
+        margin-top: 6px;
+      }
+    }
+  }
+
+  .table-wrap {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #eef2f7;
+    box-shadow: 0 10px 20px rgba(17,24,39,.05);
+    overflow: hidden;
+  }
+
+  .modern-table {
+    margin: 0;
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background: #fafafa;
+      z-index: 1;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #6b7280;
+      border-bottom-color: #eef2f7;
+      cursor: pointer;
+
+      .sort {
+        margin-left: 6px;
+        opacity: .35;
+        &.active { opacity: 1; }
+        span { display: inline-block; transform: rotate(180deg); }
+        .asc { transform: rotate(180deg); }
+        .desc { transform: rotate(0deg); }
+      }
+    }
+
+    tbody td {
+      vertical-align: middle;
+    }
+  }
+
+  .patient {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, #6f42c1, #9f7aea);
+    }
+
+    .meta .name {
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .meta .sub {
+      font-size: 12px;
+    }
+  }
+
+  .when .date {
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+
+    &.confirmed {
+      background: #e7f6ec;
+      color: #166534;
+    }
+
+    &.pending {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+
+    &.cancelled {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .filters {
+      grid-template-columns: 1fr;
+    }
+    .modern-table thead { display: none; }
+    .modern-table tbody tr {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      padding: 10px 12px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+  }
+}

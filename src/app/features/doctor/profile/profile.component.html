@@ -1,0 +1,55 @@
+<div class="container mt-4">
+  <div class="card shadow-lg border-0">
+    <div class="card-body p-4">
+      <h3 class="text-center text-purple mb-4">👨‍⚕️ Doctor Profile</h3>
+
+      <!-- Loading Spinner -->
+      <div *ngIf="loading" class="text-center">
+        <div class="spinner-border text-purple" role="status"></div>
+      </div>
+
+      <!-- Error -->
+      <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+      <!-- Profile View -->
+      <div *ngIf="!loading && !editMode">
+        <p><strong>Name:</strong> {{ profile.name }}</p>
+        <p><strong>Email:</strong> {{ profile.email }}</p>
+        <p><strong>Phone:</strong> {{ profile.phone }}</p>
+        <p><strong>Specialization:</strong> {{ profile.specialization }}</p>
+
+        <button class="btn btn-purple mt-3" (click)="enableEdit()">
+          ✏️ Edit Profile
+        </button>
+      </div>
+
+      <!-- Profile Edit Form -->
+      <form *ngIf="editMode" (ngSubmit)="saveProfile()">
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input class="form-control" [(ngModel)]="profile.name" name="name" required />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input class="form-control" [(ngModel)]="profile.email" name="email" required />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Phone</label>
+          <input class="form-control" [(ngModel)]="profile.phone" name="phone" required />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Specialization</label>
+          <select class="form-select" [(ngModel)]="profile.specialization" name="specialization" required>
+            <option *ngFor="let spec of specializations" [value]="spec">{{ spec }}</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-success me-2">💾 Save</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelEdit()">❌ Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>

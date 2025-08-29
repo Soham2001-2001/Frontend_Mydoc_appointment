@@ -1,0 +1,58 @@
+<div class="auth-container">
+  <div class="overlay">
+    <div class="auth-card">
+      <img src="assets/logo/mydoc-logo.svg" alt="MyDoc Appointment" class="logo mb-3" />
+      <h2 class="mb-1">Welcome Back</h2>
+      <p class="text-muted mb-4">Login to your account</p>
+
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate>
+        <!-- Email -->
+        <div class="mb-3">
+          <input type="email"
+                 name="email"
+                 [(ngModel)]="email"
+                 required
+                 email
+                 #emailCtrl="ngModel"
+                 class="form-control"
+                 placeholder="Email address" />
+          <div class="field-error" *ngIf="emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)">
+            <small *ngIf="emailCtrl.errors?.['required']">Email is required.</small>
+            <small *ngIf="emailCtrl.errors?.['email']">Invalid email format.</small>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <input type="password"
+                 name="password"
+                 [(ngModel)]="password"
+                 required
+                 minlength="6"
+                 #pwdCtrl="ngModel"
+                 class="form-control"
+                 placeholder="Password" />
+          <div class="field-error" *ngIf="pwdCtrl.invalid && (pwdCtrl.dirty || pwdCtrl.touched)">
+            <small *ngIf="pwdCtrl.errors?.['required']">Password is required.</small>
+            <small *ngIf="pwdCtrl.errors?.['minlength']">Minimum 6 characters.</small>
+          </div>
+        </div>
+
+        <button type="submit"
+                class="btn btn-auth w-100"
+                [disabled]="loading || loginForm.invalid">
+          {{ loading ? 'Signing in…' : 'Login' }}
+        </button>
+      </form>
+
+      <p class="mt-3 small">
+        Don’t have an account?
+        <a routerLink="/auth/register">Register</a>
+      </p>
+
+      <div *ngIf="errorMsg" class="alert alert-danger mt-3 py-2">
+        {{ errorMsg }}
+      </div>
+    </div>
+  </div>
+</div>

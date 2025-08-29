@@ -1,0 +1,20 @@
+<div class="role-container">
+  <div class="overlay">
+    <div class="role-card">
+      <img src="assets/logo/mydoc-logo.svg" alt="MyDoc Appointment" class="logo mb-3" />
+      <h2 class="mb-4">Choose Your Role</h2>
+
+      <div class="role-buttons">
+        <a routerLink="/auth/login" [queryParams]="{ role: 'PATIENT' }" class="btn btn-role patient">
+          Patient
+        </a>
+        <a routerLink="/auth/login" [queryParams]="{ role: 'DOCTOR' }" class="btn btn-role doctor">
+          Doctor
+        </a>
+        <a routerLink="/auth/login" [queryParams]="{ role: 'ADMIN' }" class="btn btn-role admin">
+          Admin
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+
+    environment {
+        DEVOPS_DIR = "${WORKSPACE}\\devops\\k8s"
+        K8S_NS     = "mydoc"
+    }
+
+    stages {
+        stage('Point Docker to Minikube') {
+            steps {
+                powershell '''
+                    kubectl version --client
+                    minikube status
+                '''
+            }
+        }
+
+        stage('Build Backend Image') {
+            steps {
+                dir('doctor-appointment') {
+                    powershell 'docker build -t mydoc/backend:latest .'
+                }
+            }
+        }
+
+        stage('Build Frontend Image') {
+            steps {
+                dir('appointment-frontend') {
+                    powershell 'docker build -t mydoc/frontend:latest .'
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                powershell """
+                    kubectl apply -f ${DEVOPS_DIR}/namespace.yaml
+                    kubectl apply -n ${K8S_NS} -f ${DEVOPS_DIR}/mysql-secret.yaml
+                    kubectl apply -n ${K8S_NS} -f ${DEVOPS_DIR}/mysql-statefulset.yaml
+                    kubectl apply -n ${K8S_NS} -f ${DEVOPS_DIR}/backend-deployment.yaml
+                    kubectl apply -n ${K8S_NS} -f ${DEVOPS_DIR}/frontend-configmap.yaml
+                    kubectl apply -n ${K8S_NS} -f ${DEVOPS_DIR}/frontend-deployment.yaml
+                """
+            }
+        }
+    }
+
+    post {
+        success {
+            echo " Build & Deploy complete"
+        }
+        failure {
+            echo " Pipeline failed — check logs"
+        }
+    }
+}

@@ -1,0 +1,61 @@
+<h2>Add Doctor</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="form-card" novalidate>
+  <!-- Name -->
+  <div class="row">
+    <label>Name *</label>
+    <input class="form-control" formControlName="name" placeholder="Dr. Jane Doe">
+    <div class="field-error" *ngIf="form.controls['name'].touched && form.controls['name'].invalid">
+      <small *ngIf="form.controls['name'].errors?.['required']">Name is required.</small>
+    </div>
+  </div>
+
+  <!-- Email -->
+  <div class="row">
+    <label>Email *</label>
+    <input class="form-control" formControlName="email" placeholder="name@example.com">
+    <div class="field-error" *ngIf="form.controls['email'].touched && form.controls['email'].invalid">
+      <small *ngIf="form.controls['email'].errors?.['required']">Email is required.</small>
+      <small *ngIf="form.controls['email'].errors?.['email']">Invalid email format.</small>
+    </div>
+  </div>
+
+  <!-- Phone -->
+  <div class="row">
+    <label>Phone *</label>
+    <input class="form-control" formControlName="phone" placeholder="10-digit number">
+    <div class="field-error" *ngIf="form.controls['phone'].touched && form.controls['phone'].invalid">
+      <small *ngIf="form.controls['phone'].errors?.['required']">Phone is required.</small>
+      <small *ngIf="form.controls['phone'].errors?.['pattern']">Phone must be exactly 10 digits.</small>
+    </div>
+  </div>
+
+  <!-- Password -->
+  <div class="row">
+    <label>Password *</label>
+    <input class="form-control" type="password" formControlName="password" placeholder="Set login password">
+    <div class="field-error" *ngIf="form.controls['password'].touched && form.controls['password'].invalid">
+      <small *ngIf="form.controls['password'].errors?.['required']">Password is required.</small>
+      <small *ngIf="form.controls['password'].errors?.['minlength']">Minimum 6 characters.</small>
+    </div>
+  </div>
+
+  <!-- Specialization -->
+  <div class="row">
+    <label>Specialization *</label>
+    <select class="form-select" formControlName="specializationId">
+      <option [ngValue]="undefined">-- Select --</option>
+      <option *ngFor="let s of specs" [value]="s.id">{{ s.name }}</option>
+    </select>
+    <div class="field-error" *ngIf="form.controls['specializationId'].touched && form.controls['specializationId'].invalid">
+      <small *ngIf="form.controls['specializationId'].errors?.['required']">Specialization is required.</small>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" type="submit" [disabled]="saving || form.invalid">Save</button>
+    <a class="btn btn-secondary" [routerLink]="['/admin/doctors']">Cancel</a>
+  </div>
+
+  <div class="alert alert-danger mt-2" *ngIf="errorMsg">{{ errorMsg }}</div>
+</form>

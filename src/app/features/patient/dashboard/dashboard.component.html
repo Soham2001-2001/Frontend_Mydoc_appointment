@@ -1,0 +1,115 @@
+<div class="patient-dash">
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="assets/logo/mydoc-logo.svg" alt="MyDoc" />
+        <div class="title">
+          <div class="line1">MyDoc</div>
+          <div class="line2">Patient</div>
+        </div>
+      </div>
+
+      <nav class="menu">
+        <a routerLink="appointments" routerLinkActive="active"><span>📅</span> My Appointments</a>
+        <a routerLink="book" routerLinkActive="active"><span>➕</span> Book Appointment</a>
+        <a routerLink="profile" routerLinkActive="active"><span>👤</span> Profile</a>
+      </nav>
+
+      <button class="btn-logout" type="button" (click)="logout()">Logout</button>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <!-- Overview (only when NO child route is active) -->
+      <ng-container *ngIf="!childActive">
+        <div class="head">
+          <div>
+            <h2>Welcome back 👋</h2>
+            <p class="muted">Today is <strong>{{ today | date: 'fullDate' }}</strong></p>
+          </div>
+
+          <div class="head-actions">
+            <button class="btn primary" type="button" [routerLink]="['/patient/book']">Book New</button>
+            <button class="btn ghost" type="button" [routerLink]="['/patient/appointments']">View All</button>
+          </div>
+        </div>
+
+        <div *ngIf="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
+
+        <div class="kpis">
+          <div class="kpi-card next">
+            <div class="kpi-title">Next Appointment</div>
+            <div class="kpi-value" *ngIf="kpis.nextAppointment; else none">
+              <div class="next-doc">{{ kpis.nextAppointment?.doctorName }}</div>
+              <div class="next-when">
+                {{ kpis.nextAppointment?.date }} •
+                {{ kpis.nextAppointment?.startTime }} – {{ kpis.nextAppointment?.endTime }}
+              </div>
+            </div>
+            <ng-template #none><div class="muted">No upcoming appointment</div></ng-template>
+          </div>
+
+          <div class="kpi-card upcoming">
+            <div class="kpi-title">Upcoming</div>
+            <div class="kpi-value big">{{ kpis.upcomingCount || 0 }}</div>
+          </div>
+
+          <div class="kpi-card completed">
+            <div class="kpi-title">Completed</div>
+            <div class="kpi-value big">{{ kpis.completedCount || 0 }}</div>
+          </div>
+        </div>
+
+        <div class="card table-card" *ngIf="apptsPreview.length > 0; else empty">
+          <div class="card-head">
+            <h5 class="m-0">Your Next Appointments</h5>
+            <button class="btn small" type="button" [routerLink]="['/patient/appointments']">See all</button>
+          </div>
+
+          <div class="table-wrap">
+            <table class="table modern">
+              <thead>
+                <tr>
+                  <th>Doctor</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th class="text-end">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let a of apptsPreview">
+                  <td>{{ a.doctorName }}</td>
+                  <td>{{ a.date }}</td>
+                  <td>{{ a.startTime }} – {{ a.endTime }}</td>
+                  <td class="text-end">
+                    <span class="chip"
+                          [ngClass]="{
+                            confirmed: a.status === 'CONFIRMED' || a.status === 'BOOKED',
+                            cancelled: a.status === 'CANCELLED',
+                            pending: a.status === 'PENDING'
+                          }">
+                      {{ a.status }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <ng-template #empty>
+          <div class="card empty">
+            <div class="emoji">🗓️</div>
+            <h5>No upcoming appointments</h5>
+            <p class="muted">You can book a new appointment in just a few clicks.</p>
+            <button class="btn primary" type="button" [routerLink]="['/patient/book']">Book Now</button>
+          </div>
+        </ng-template>
+      </ng-container>
+
+      <!-- Child pages render here (appointments / book / profile) -->
+      <router-outlet *ngIf="childActive"></router-outlet>
+    </main>
+  </div>
+</div>

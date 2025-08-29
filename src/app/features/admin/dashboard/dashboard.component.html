@@ -1,0 +1,20 @@
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="logo">🩺</span>
+      <span class="title">Admin</span>
+    </div>
+
+    <nav class="nav">
+      <a routerLink="doctors" routerLinkActive="active">Doctors</a>
+      <a routerLink="specializations" routerLinkActive="active">Specializations</a>
+      <a routerLink="/" class="muted">Back to App</a>
+    </nav>
+  </aside>
+
+  <!-- Content -->
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

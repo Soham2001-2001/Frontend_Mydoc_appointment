@@ -1,0 +1,129 @@
+<div class="doctor-appts container py-4">
+  <div class="header-row">
+    <div>
+      <h2 class="page-title">My Appointments</h2>
+      <p class="text-muted m-0">Manage and review your upcoming consultations</p>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-light" (click)="fetch()" [disabled]="loading">
+        <span class="material-icons align-text-bottom me-1">refresh</span> Refresh
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <div class="search">
+      <input
+        class="form-control"
+        type="search"
+        placeholder="Search by patient name..."
+        [(ngModel)]="searchTerm"
+      />
+    </div>
+
+    <div class="segmented">
+      <button class="seg-btn" [class.active]="dateFilter==='UPCOMING'" (click)="setDateFilter('UPCOMING')">Upcoming</button>
+      <button class="seg-btn" [class.active]="dateFilter==='TODAY'" (click)="setDateFilter('TODAY')">Today</button>
+      <button class="seg-btn" [class.active]="dateFilter==='PAST'" (click)="setDateFilter('PAST')">Past</button>
+      <button class="seg-btn" [class.active]="dateFilter==='ALL'" (click)="setDateFilter('ALL')">All</button>
+    </div>
+
+    <div class="status-select">
+      <select class="form-select" [(ngModel)]="status">
+        <option value="ALL">All Statuses</option>
+        <option value="CONFIRMED">Confirmed</option>
+        <option value="PENDING">Pending / Booked</option>
+        <option value="CANCELLED">Cancelled</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Loading skeleton -->
+  <div *ngIf="loading" class="card p-4 skeleton">
+    <div class="s-line w-50"></div>
+    <div class="s-line w-75"></div>
+    <div class="s-line w-25"></div>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!loading && error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="!loading && !error && view.length === 0" class="empty">
+    <div class="empty-card">
+      <div class="icon">📅</div>
+      <h5>No appointments match your filters</h5>
+      <p class="text-muted">Try changing the date or status, or clear the search.</p>
+      <button class="btn btn-primary" (click)="searchTerm=''; status='ALL'; dateFilter='UPCOMING'">Reset Filters</button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div *ngIf="!loading && !error && view.length > 0" class="table-wrap">
+    <table class="table align-middle modern-table">
+      <thead>
+        <tr>
+          <th (click)="toggleSort('patientName')">
+            Patient
+            <span class="sort" [class.active]="sortKey==='patientName'">
+              <span [class.asc]="sortAsc" [class.desc]="!sortAsc" *ngIf="sortKey==='patientName'">▾</span>
+            </span>
+          </th>
+          <th (click)="toggleSort('date')" class="w-30">
+            Date &amp; Time
+            <span class="sort" [class.active]="sortKey==='date'">
+              <span [class.asc]="sortAsc" [class.desc]="!sortAsc" *ngIf="sortKey==='date'">▾</span>
+            </span>
+          </th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let appt of view">
+          <td>
+            <div class="patient">
+              <div class="avatar">{{ (appt.patientName || '?').charAt(0).toUpperCase() }}</div>
+              <div class="meta">
+                <div class="name">{{ appt.patientName }}</div>
+                <div class="sub text-muted">ID: #{{ appt.id }}</div>
+              </div>
+            </div>
+          </td>
+
+          <td>
+            <div class="when">
+              <div class="date">{{ appt.date }}</div>
+              <div class="time text-muted">{{ appt.startTime }} – {{ appt.endTime }}</div>
+            </div>
+          </td>
+
+          <td>
+            <span class="badge status-badge"
+              [ngClass]="{
+                'confirmed': appt.status === 'CONFIRMED',
+                'pending': appt.status === 'PENDING' || appt.status === 'BOOKED',
+                'cancelled': appt.status === 'CANCELLED'
+              }">
+              {{ appt.status }}
+            </span>
+          </td>
+
+          <td>
+            <button
+              class="btn btn-sm btn-danger"
+              *ngIf="appt.status !== 'CANCELLED'"
+              (click)="cancel(appt.id)">
+              Cancel
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

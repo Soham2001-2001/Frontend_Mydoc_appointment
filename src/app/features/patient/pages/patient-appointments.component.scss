@@ -1,0 +1,32 @@
+.custom-table {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: #eef2ff;
+  color: #3b5bdb;
+}
+
+.status-badge.booked { background: #e7f0ff; color: #2b6cb0; }
+.status-badge.cancelled { background: #ffe7e7; color: #c53030; }
+.status-badge.completed { background: #e7ffef; color: #2f855a; }
+
+/* simple modal */
+.reschedule-modal {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1050;
+}
+.modal-content {
+  width: 520px; max-width: calc(100% - 2rem);
+  background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}

@@ -1,0 +1,35 @@
+<header class="app-nav sticky-top">
+  <div class="nav-wrap container">
+    <!-- Brand -->
+    <a class="brand" routerLink="/">
+      <img src="assets/logo/mydoc-logo.svg" alt="MyDoc Appointment" class="brand-logo" />
+      <span>MyDoc <strong>Appointment</strong></span>
+    </a>
+
+    <!-- Mobile toggle -->
+    <button class="nav-toggle" (click)="toggleNav()" aria-label="Toggle navigation" [attr.aria-expanded]="isOpen">
+      <span></span><span></span><span></span>
+    </button>
+
+    <!-- Links -->
+    <nav class="links" [class.open]="isOpen">
+      <ul>
+        <!-- When NOT logged in -->
+        <li *ngIf="!auth.isLoggedIn()">
+          <a routerLink="/auth/role-login" routerLinkActive="active">Login</a>
+        </li>
+        <li *ngIf="!auth.isLoggedIn()">
+          <a routerLink="/auth/register" routerLinkActive="active">Register</a>
+        </li>
+
+        <!-- When logged in -->
+        <li *ngIf="auth.isLoggedIn()">
+          <a routerLink="/patient" routerLinkActive="active">Dashboard</a>
+        </li>
+        <li *ngIf="auth.isLoggedIn()">
+          <button class="btn-ghost" (click)="logout()">Logout</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

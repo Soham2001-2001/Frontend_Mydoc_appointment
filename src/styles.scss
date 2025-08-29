@@ -1,0 +1,156 @@
+/* ----------------------------------
+   Import Bootstrap (after overrides)
+----------------------------------- */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+$primary: #6f42c1;   // Professional purple
+$secondary: #6c757d; // Cool gray
+$light: #f8f9fa;
+$dark: #343a40;
+$success: #28a745;
+$danger: #dc3545;
+$warning: #ffc107;
+
+@import "bootstrap/scss/bootstrap";
+
+/* ----------------------------------
+   Global Body & Typography
+----------------------------------- */
+body {
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+  background: #f5f6fa;
+  color: $dark;
+  line-height: 1.6;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5 {
+  font-weight: 600;
+  color: $dark;
+}
+
+/* ----------------------------------
+   Buttons
+----------------------------------- */
+.btn {
+  border-radius: 0.65rem;
+  font-weight: 500;
+  padding: 0.55rem 1.4rem;
+  transition: all 0.2s ease;
+
+  &-primary {
+    background: linear-gradient(135deg, lighten($primary, 5%), $primary);
+    border: none;
+
+    &:hover {
+      background: darken($primary, 5%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba($primary, 0.3);
+    }
+  }
+
+  &-secondary {
+    background: $secondary;
+    border: none;
+
+    &:hover {
+      background: darken($secondary, 6%);
+      transform: translateY(-1px);
+    }
+  }
+
+  &-outline-light {
+    border: 1px solid #ddd;
+    &:hover {
+      background: $light;
+    }
+  }
+}
+
+/* ----------------------------------
+   Cards
+----------------------------------- */
+.card {
+  border-radius: 1rem;
+  border: none;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  }
+
+  .card-header {
+    background: $light;
+    font-weight: 600;
+    font-size: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+}
+
+/* ----------------------------------
+   Tables
+----------------------------------- */
+.table {
+  background: #fff;
+  border-radius: 0.75rem;
+  overflow: hidden;
+
+  thead {
+    background: $primary;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  tbody tr {
+    &:hover {
+      background: rgba($primary, 0.05);
+    }
+  }
+}
+
+/* ----------------------------------
+   Form Styling
+----------------------------------- */
+.form-control {
+  border-radius: 0.65rem;
+  border: 1px solid #ddd;
+  padding: 0.55rem 1rem;
+  transition: border 0.2s;
+
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 0.2rem rgba($primary, 0.25);
+  }
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 0.35rem;
+}
+
+/* ----------------------------------
+   Sidebar (if you add later)
+----------------------------------- */
+.sidebar {
+  background: $primary;
+  color: #fff;
+  min-height: 100vh;
+  padding: 1.5rem;
+
+  .nav-link {
+    color: rgba(255, 255, 255, 0.9);
+    border-radius: 0.5rem;
+    margin-bottom: 0.3rem;
+
+    &:hover, &.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+  }
+}

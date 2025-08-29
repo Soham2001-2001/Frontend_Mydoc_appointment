@@ -1,0 +1,59 @@
+<div class="booking-container my-5 p-4 rounded shadow-lg bg-white">
+  <h2 class="text-center mb-4 text-purple fw-bold">Book an Appointment</h2>
+
+  <!-- Specialization -->
+  <div class="mb-3">
+    <label class="form-label fw-semibold">Select Specialization</label>
+    <select class="form-select border-purple"
+            [(ngModel)]="selectedSpec"
+            (change)="onSpecializationChange()">
+      <option [ngValue]="null">-- Choose Specialization --</option>
+      <option *ngFor="let spec of specializations" [ngValue]="spec.id">
+        {{ spec.name }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Doctor -->
+  <div class="mb-3" *ngIf="doctors.length > 0">
+    <label class="form-label fw-semibold">Select Doctor</label>
+    <select class="form-select border-purple"
+            [(ngModel)]="selectedDoctor"
+            (change)="onDoctorChange()">
+      <option [ngValue]="null">-- Choose Doctor --</option>
+      <option *ngFor="let doc of doctors" [ngValue]="doc.id">
+        Dr. {{ doc.name }} ({{ doc.specialization?.name }})
+      </option>
+    </select>
+  </div>
+
+  <!-- Slots -->
+  <div class="mb-3" *ngIf="slots.length > 0">
+    <label class="form-label fw-semibold">Select Available Slot</label>
+    <select class="form-select border-purple"
+            [(ngModel)]="selectedSlot">
+      <option [ngValue]="null">-- Choose Slot --</option>
+      <option *ngFor="let s of slots" [ngValue]="s.id">
+        {{ s.date }} | {{ s.startTime }} - {{ s.endTime }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Book Button -->
+  <button class="btn btn-purple w-100 mt-3"
+          (click)="bookAppointment()"
+          [disabled]="loading">
+    {{ loading ? 'Booking...' : 'Book Appointment' }}
+  </button>
+
+  <!-- Message -->
+  <div class="alert mt-3"
+       *ngIf="message"
+       [ngClass]="{
+         'alert-success': message.includes('✅'),
+         'alert-danger': message.includes('❌'),
+         'alert-warning': message.includes('⚠️')
+       }">
+    {{ message }}
+  </div>
+</div>

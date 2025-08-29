@@ -1,0 +1,18 @@
+<h2>Specializations</h2>
+
+<div class="add-row">
+  <input class="form-control" placeholder="New specialization" [(ngModel)]="name">
+  <button class="btn btn-primary" (click)="add()">Add</button>
+</div>
+
+<table class="table table-striped mt-3" *ngIf="list?.length">
+  <thead><tr><th>Name</th><th style="width:120px;">Actions</th></tr></thead>
+  <tbody>
+    <tr *ngFor="let s of list">
+      <td>{{ s.name }}</td>
+      <td><button class="btn btn-sm btn-danger" (click)="remove(s.id)">Delete</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="!list?.length" class="text-muted">No specializations yet.</div>

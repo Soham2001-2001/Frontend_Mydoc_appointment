@@ -1,0 +1,84 @@
+<div class="container mt-4">
+  <h3 class="mb-3">🕒 My Availability</h3>
+
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border text-primary"></div>
+  </div>
+
+  <!-- Form -->
+  <form (ngSubmit)="saveAvailability()" class="row g-3 mb-4">
+    <!-- Date -->
+    <div class="col-md-4">
+      <input
+        [(ngModel)]="newSlot.date"
+        name="date"
+        type="date"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <!-- Start Time -->
+    <div class="col-md-3">
+      <select
+        [(ngModel)]="newSlot.startTime"
+        name="startTime"
+        class="form-select"
+        required
+      >
+        <option value="" disabled>Select Start Time</option>
+        <option *ngFor="let time of timeSlots" [value]="time">
+          {{ time }}
+        </option>
+      </select>
+    </div>
+
+    <!-- End Time -->
+    <div class="col-md-3">
+      <select
+        [(ngModel)]="newSlot.endTime"
+        name="endTime"
+        class="form-select"
+        required
+      >
+        <option value="" disabled>Select End Time</option>
+        <option *ngFor="let time of timeSlots" [value]="time">
+          {{ time }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Button -->
+    <div class="col-md-2">
+      <button class="btn btn-primary w-100">Add Slot</button>
+    </div>
+  </form>
+
+  <!-- Availability Table -->
+  <table *ngIf="!loading && availability.length" class="table table-bordered table-hover shadow-sm">
+    <thead class="table-secondary">
+      <tr>
+        <th>Date</th>
+        <th>Start</th>
+        <th>End</th>
+        <th class="text-center">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let slot of availability">
+        <td>{{ slot.date }}</td>
+        <td>{{ slot.startTime }}</td>
+        <td>{{ slot.endTime }}</td>
+        <td class="text-center">
+          <button class="btn btn-sm btn-outline-danger" (click)="deleteSlot(slot.id)">
+            ❌ Remove
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && !availability.length" class="alert alert-info">
+    No availability slots defined.
+  </div>
+</div>

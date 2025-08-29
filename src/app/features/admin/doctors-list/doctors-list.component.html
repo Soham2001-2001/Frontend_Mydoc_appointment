@@ -1,0 +1,72 @@
+<div class="header-row">
+  <h2>Manage Doctors</h2>
+  <button class="btn btn-primary" (click)="goToAdd()">+ Add Doctor</button>
+</div>
+
+<div *ngIf="loading">Loading…</div>
+<div class="alert alert-danger" *ngIf="errorMsg">{{ errorMsg }}</div>
+<div class="alert alert-success" *ngIf="successMsg">{{ successMsg }}</div>
+
+<table class="table table-striped mt-3" *ngIf="!loading && doctors?.length">
+  <thead>
+    <tr>
+      <th>Name</th><th>Email</th><th>Phone</th><th>Specialization</th><th style="width: 260px;">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let d of doctors">
+      <!-- Name -->
+      <td *ngIf="editingId !== d.id">{{ d.name }}</td>
+      <td *ngIf="editingId === d.id">
+        <input [(ngModel)]="form.name" class="form-control">
+      </td>
+
+      <!-- Email -->
+      <td *ngIf="editingId !== d.id">{{ d.email }}</td>
+      <td *ngIf="editingId === d.id">
+        <input [(ngModel)]="form.email" class="form-control">
+      </td>
+
+      <!-- Phone -->
+      <td *ngIf="editingId !== d.id">{{ d.phone }}</td>
+      <td *ngIf="editingId === d.id">
+        <input [(ngModel)]="form.phone" class="form-control">
+      </td>
+
+      <!-- Specialization -->
+      <td *ngIf="editingId !== d.id">{{ d.specialization?.name || '-' }}</td>
+      <td *ngIf="editingId === d.id">
+        <div class="d-flex flex-column gap-2">
+          <select [(ngModel)]="form.specializationId" class="form-select">
+            <option [ngValue]="undefined">-- Select --</option>
+            <option *ngFor="let s of specializations" [value]="s.id">{{ s.name }}</option>
+          </select>
+
+          <!-- Password required on update -->
+          <input type="password" class="form-control" [(ngModel)]="form.password" placeholder="New password (min 6)">
+        </div>
+      </td>
+
+      <!-- Actions -->
+      <td>
+        <ng-container *ngIf="editingId !== d.id; else editingActions">
+          <button class="btn btn-sm btn-primary me-2" (click)="startEdit(d)">Edit</button>
+          <button class="btn btn-sm btn-outline-danger"
+                  [disabled]="deletingId === d.id"
+                  (click)="confirmDelete(d)">
+            {{ deletingId === d.id ? 'Deleting…' : 'Delete' }}
+          </button>
+        </ng-container>
+
+        <ng-template #editingActions>
+          <div class="d-flex gap-2">
+            <button class="btn btn-sm btn-success" [disabled]="saving" (click)="save()">Save</button>
+            <button class="btn btn-sm btn-secondary" [disabled]="saving" (click)="cancel()">Cancel</button>
+          </div>
+        </ng-template>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="!loading && !doctors?.length" class="text-muted">No doctors found.</div>

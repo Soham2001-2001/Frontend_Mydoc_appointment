@@ -1,0 +1,61 @@
+.text-purple { color: #6f42c1; }
+.badge.bg-soft-purple {
+  background: #f1e9ff;
+  color: #6f42c1;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+.btn-outline-purple {
+  border-color: #6f42c1;
+  color: #6f42c1;
+}
+.btn-outline-purple:hover {
+  background: #6f42c1;
+  color: #fff;
+}
+
+/* Align icon + text properly */
+button .material-icons {
+  font-size: 18px;
+}
+
+/* Fade in for sections */
+.fade-in {
+  animation: fadeIn .18s ease-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Collapsible password panel */
+.pwd-wrap {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease, margin-top .3s ease;
+}
+.pwd-wrap.open {
+  max-height: 420px;
+  margin-top: 12px;
+}
+
+.pwd-card {
+  background: linear-gradient(180deg, #ffffff, #faf8ff);
+  border: 1px solid #eee6ff;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+/* Gradient button */
+.btn-gradient {
+  background: linear-gradient(135deg, #6f42c1, #9f7aea);
+  color: #fff;
+  border: none;
+}
+.btn-gradient:hover {
+  filter: brightness(0.95);
+}
+
+/* Spinner color */
+.spinner-border.text-purple { color: #6f42c1; }
